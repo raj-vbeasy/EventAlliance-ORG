@@ -1,0 +1,181 @@
+<event-details-page-header (onSummaryModalClose)="ReloadData()" [eventDetails]="eventDetails" [page]="'summary'"></event-details-page-header>
+
+<div class="m-content" style="padding-left: 15px; padding-right: 15px;">
+	<div class="m-portlet">
+		<div class="m-portlet__body  m-portlet__body--no-padding">
+			<div class="row m-row--no-padding m-row--col-separator-xl">			
+				<div class="col-xl-3">
+					<!--begin:: Widgets/Stats2-1 -->
+					<div class="m-widget1">
+						<div class="m-widget1__item">
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+									<h6 class="text-muted">
+										Description
+									</h6>
+									<span class="m-widget1__desc">
+										{{ eventDetails.description }}
+									</span>
+								</div>								
+							</div>
+						</div>						
+					</div>
+					<!--end:: Widgets/Stats2-1 -->		
+				</div>
+				<div class="col-xl-3">
+					<!--begin:: Widgets/Daily Sales-->
+					<div class="m-widget1">
+						<div class="m-widget1__item">
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+									<h6 class="text-muted">
+										Location
+									</h6>
+									<span class="m-widget1__desc">
+										Venue
+									</span>
+									<p>
+										<strong>{{ eventDetails.venue_name }}</strong>
+									</p>
+									<span class="m-widget1__desc">
+										Address
+									</span>
+									<div style="font-weight: bold">
+										{{ eventDetails.address_line_1 }}
+										<div *ngIf="eventDetails.address_line_2!=''">
+											{{ eventDetails.address_line_2 }}
+										</div>
+										<div *ngIf="eventDetails.city!=''">
+											{{ eventDetails.city }}, {{ eventDetails.state }} - {{ eventDetails.zip }}
+										</div>
+									</div>
+								</div>								
+							</div>
+						</div>						
+					</div>
+					<!--end:: Widgets/Daily Sales-->		
+				</div>
+				<div class="col-xl-6">
+					<!--begin:: Widgets/Profit Share-->
+					<div class="m-widget1">
+						<div class="m-widget1__item">
+							<div class="row m-row--no-padding align-items-center">
+								<div class="col">
+									<h6 class="text-muted">
+										Act Preferences
+									</h6>
+									<div class="row">
+										<div class="col-md-4">
+											<span class="m-widget1__desc">
+												Artist Nedeed
+											</span>
+											<p>
+												<strong>{{ eventDetails.artist_number.number_of_artist }}</strong>
+											</p>
+											<span class="m-widget1__desc">
+												Total Budget
+											</span>
+											<p>
+												<strong>{{ eventDetails.budget.amount }}</strong>
+											</p>
+										</div>
+
+										<div class="col-md-8">
+											<span class="m-widget1__desc">
+												Target Generes
+											</span>
+											<p>
+											<span *ngFor="let genre of eventDetails.event_genres" class="m-badge  m-badge--info m-badge--wide">
+												{{ genre.genre.name }}
+											</span>
+												
+											</p>
+											<span class="m-widget1__desc">
+												Target Demographic
+											</span>
+											<p>
+												<span *ngFor="let demographic of eventDetails.event_demographics" class="m-badge m-badge--info m-badge--wide" >
+													{{ demographic.demographic.name }}
+												</span>&nbsp;
+											</p>	
+										</div>
+									</div>
+								</div>								
+							</div>
+						</div>						
+					</div>
+					<!--end:: Widgets/Profit Share-->	
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="m-portlet m-portlet--bordered-semi  m-portlet--fit " >
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Artist Review
+					</h3>
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<table class="table" >
+				<thead>
+					<tr>
+						<th width="20%">Name</th>
+						<th width="10%">Total View</th>
+						<th width="10%">Subscribers</th>
+						<th width="10%">Budget</th>
+						<th width="10%">Public Approval</th>
+						<th width="10%">Team Approval</th>
+						<th width="10%">Team Progress</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of eventArtistSurveyProp">
+						<td>
+							<img *ngIf = "eventArtistSurvey[item].artistProfilePicture == null" src="./assets/eventalliance/media/img/users/user4.jpg" style="border-radius: 50%; height:50px; width:50px;"  alt="" />
+							<img *ngIf = "eventArtistSurvey[item].artistProfilePicture != null" src="{{eventArtistSurvey[item].artistProfilePicture}}" style="border-radius: 50%; height:50px; width:50px;"  alt="" />
+							&nbsp;&nbsp;&nbsp; 
+							<strong>
+								<a routerLink="/artist-details/{{eventArtistSurvey[item].artistId}}" class="m-menu__link">
+									<span class="m-menu__item-here"></span>
+									<span class="m-menu__link-text">
+										{{item}}
+									</span>
+								</a>
+							</strong> 
+						</td>
+						<td>{{eventArtistSurvey[item].channel_view_count}}</td>
+						<td>{{eventArtistSurvey[item].channel_subscriber_count}}</td>
+						<td>{{eventArtistSurvey[item].budget}}</td>
+						<td>
+							<span class="m-badge m-badge--success m-badge--wide" >
+								{{eventArtistSurvey[item].public}}%
+							</span>
+						</td>
+						<td>
+							<span class="m-badge m-badge--metal m-badge--wide" >
+								{{eventArtistSurvey[item].team}}%
+							</span>
+						</td>
+
+						<td>
+							<div class="progress m-progress--sm"> 
+								<div class="progress-bar m--bg-brand" role="progressbar" [ngStyle]="{'width': eventArtistSurvey[item].team_progress + '%'}" ></div>										
+							</div>									
+						</td>
+					</tr>
+
+				</tbody>
+
+			</table>
+
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,150 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+    <div class="m-subheader-search">
+        <h2 class="m-subheader-search__title">
+            Edit User
+        </h2>
+
+    </div>
+
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+
+    <div class="col-lg-6 offset-lg-3">
+        <div class="m-portlet m-portlet--full-height">
+            <div class="m-portlet__body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Profile</strong>
+                        <div class="m-card-profile">
+                            <div class="m-card-profile__pic">
+                                <div class="m-card-profile__pic-wrapper">
+                                    <img [src]='formData.profile_pic == null ? "./assets/eventalliance/media/img/no-image.jpg" : formData.profile_pic' style="height: 80px; width: 80px;" alt=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">     
+                        <br/><br/><br/>
+                        <button type="button" (click)="profileImgClick()" class="btn btn-success m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Change photo</button> 
+                        <input type="file" (change)="onProfileImageChange($event)" class="d-none" #profileImage>
+                        <br/><br/>
+                        <small>Click the button above to upload a new image</small>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr/>
+                        <!-- <form> -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="FirstName">First Name *</label>
+                                    <input type="text" class="form-control m-input form-control-sm" [(ngModel)] = "formData.first_name" placeholder="First Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="LastName">Last Name *</label>
+                                    <input type="text" class="form-control m-input form-control-sm" [(ngModel)] = "formData.last_name" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="Phone">Phone *</label>
+                                    <input type="text" class="form-control m-input form-control-sm" [(ngModel)] = "formData.phone_no" placeholder="98765643214">
+                                </div>
+
+                            </div>
+
+                            <hr/>
+                            <strong>Account</strong>
+                            <br/><br/>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="Eamil">Eamil/Username *</label>
+                                    <input type="email" class="form-control m-input form-control-sm" [(ngModel)] ="formData.email" placeholder="example@mail.com">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="Password">Password *</label>
+                                    <input type="password" class="form-control m-input form-control-sm" [(ngModel)] ="newPassword" placeholder="Password">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ConfirmPassword">Confirm Password *</label>
+                                    <input type="password" id="ConfirmPassword" class="form-control m-input form-control-sm" placeholder="Confirm Password" [(ngModel)]="confirmPassword">
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Change password</button>
+                            </div>
+                            <hr/>
+
+                            <table class="table table-hover">
+                                <thead>
+                                    <th width='15%'><b>Name</b></th>
+                                    <th width='35%'>&nbsp;</th>
+                                    <th width='25%'><b>Role</b></th>
+                                    <th width='25%'>&nbsp;</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <img class="profile_team_img" src="./assets/eventalliance/media/img/users/user4.jpg" alt="">
+                                        </td>
+                                        <td>
+                                            <span class="m--font-bold">Example bold text</span>
+                                        </td>
+                                        <td>
+                                            Owner
+                                        </td>
+                                        <td align="right">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img class="profile_team_img" src="./assets/eventalliance/media/img/users/user4.jpg" alt="">
+                                        </td>
+                                        <td>
+                                            <span class="m--font-bold">Example bold text</span>
+                                        </td>
+                                        <td>
+                                            Owner
+                                        </td>
+                                        <td align="right">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table> 
+
+                            <div class="form-group">
+                                <button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Add to team</button>
+                            </div>
+                            <br/>
+                            <hr/>
+                            <strong>Admin</strong>
+                            <br/><br/>
+
+                            <div class="form-group">
+                                <button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Delete User</button>
+                            </div> -->
+                            <hr/>
+                            <!-- <button type="button" class="btn btn-outline-primary m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Cancel</button> -->
+                            <button type="button" class="btn btn-primary m-btn btn-sm m-btn--outline-2x m-btn--uppercase pull-right" (click) ="updateUser()">Update</button>
+                      <!--   </form> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

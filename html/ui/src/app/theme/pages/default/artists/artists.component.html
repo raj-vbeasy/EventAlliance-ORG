@@ -1,0 +1,182 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+    <div class="m-subheader-search">
+        <h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+            Artists
+        </h1>
+        <div class="m-grid m-grid--ver-desktop m-grid--desktop">
+            <div class="m-grid__item m-grid__item--middle">
+                <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+                    <input class="form-control form-control-sm m-input" placeholder="Keyword" type="text" [(ngModel)]="search.keyword">
+                </div>
+                <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right custom_genres_list">
+                    <!-- <select class="form-control m-hrader-search-form__select" [(ngModel)]="search.genreId">
+                         <option *ngFor="let genre of allGenres" [value]="genre.id">{{genre.name}}</option>                      
+                    </select> -->
+                    
+                     <select class="form-control m-hrader-search-form__select artist-select-to" id="cmbMember" [(ngModel)]="search.genreId"></select> 
+                </div>
+                <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                    <select class="form-control m-hrader-search-form__select" [(ngModel)]="search.budgetId">
+                        <option *ngFor="let budget of allBudgets" [value]="budget.id">{{budget.amount}}</option>                 
+                    </select>
+                </div>
+                <!-- <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                    <select class="form-control m-hrader-search-form__select">
+                        <option>Any Availablity</option>
+                        <option>Last 30 Days</option>
+                        <option>Last 20 Days</option>
+                    </select>
+                </div> -->
+                <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+                    <button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="searchArtists()">
+                        Search
+                    </button>
+                </div>
+                <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+                    <button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="resetArtistsData()">
+                        Reset
+                    </button>
+                    
+                </div>
+                <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+                     <button *ngIf="currentUser.user_type!=2" class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="openCreateArtistModal()">
+                        ADD ARTIST            
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+<!-- Team List for Datatable -->
+<div class="m-content">
+    <div class="col-lg-12">
+       <!--  <button  class="btn m-btn--pill m-btn--air btn-custom-header-panel" type="button">
+            <i class="la la-plus"></i>
+        </button> -->
+        <div class="m-portlet m-portlet--tabs">
+            
+            <div class="m-portlet__body">
+               
+             <button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" id="bulkDelete">CHECK ALL</button> 
+            <button class="btn btn-outline-danger  m-btn--bolder m-btn--uppercase" type="button" id="deleteTriger" (click)="deleteAllArtist()">
+                <i class="fa fa-trash-o"></i>    Delete All
+            </button>
+            <br><br>					
+                <div id="artist_datatable" (click)="TableClick($event)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Team List for Datatable -->
+
+
+<div class="modal fade" id="modal_artist" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{modalTitle}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-wizard__form-step" id="m_wizard_form_step_2">
+                    <div class="row">
+                        <div class="col-xl-10 offset-xl-1">
+                            <h5>Profile</h5>
+                            <div class="m-card-profile">
+                                <div class="m-card-profile__pic">
+                                    <div class="m-card-profile__pic-wrapper">
+                                        <img style="width: 80px; height: 80px" src="{{formData.profilePicture}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-form__section m-form__section--first">
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Artist Name *</label>
+                                        <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.name" placeholder="Artist Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Budget *</label>
+                                        <br>
+                                        <select id="cmbBudget" style="width:100%" class="form-control m-hrader-search-form__select" [(ngModel)]="formData.budgetId">
+                                            <option *ngFor="let budget of allBudgets" [value]="budget.id">{{budget.amount}}</option>                 
+                                        </select>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Artist Genres *</label>
+                                        <br />
+                                        <select multiple="multiple" style="width:100%" id="cmbGenres" class="form-control m-input m-input--square select2">
+                                           <option *ngFor="let genre of allGenres" [value]="genre.id">{{genre.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Youtube Source *</label>
+                                        <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.channelIds" placeholder="Youtube channel">
+                                    </div>
+                                </div>
+                                <br/>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="float-left">
+                    <button type="button" class="btn btn-outline-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" data-dismiss="modal">Cancel</button>
+                    <!-- <button type="button" class="btn btn-outline-accent m-btn--outline-2x m-btn--uppercase" data-dismiss="modal">Cancel</button> -->
+                </div>
+                <div class="float-right">
+                    <button type="button" id="add_artist" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click)="saveArtists()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="eventList" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><!-- {{modalTitle}} --></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-wizard__form-step" id="m_wizard_form_step_2">
+                    <div class="row">
+                        <div class="col-xl-10 offset-xl-1">                         
+                            <div class="row">                                   
+                                 <div class="col-md-12">
+                                    <label>Select an event *</label>
+                                    <select class="form-control m-input m-input--solid" style="width: 100%"  id="eventsList" [(ngModel)]="selectedEventId">
+                                    </select>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-metal m-btn m-btn--custom m-btn--outline-2x" data-dismiss="modal">Cancel</button>
+                <button type="button" [disabled]="!saveButtonActive"  class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click) ="SaveEvent(this.selectedEventId)" >Add Artist</button>
+            </div>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<event-details-page-header (onApprovalModalClose)="ReloadData()" [eventDetails]="eventDetails" [page]="'approval'"></event-details-page-header>
+
+<div class="m-content">
+	<div class="col-md-12">
+		<div class="m-portlet m-portlet--bordered-semi  m-portlet--fit">				
+			<div class="m-portlet__body">
+				<table class="table" >						
+					<tr>
+						<th width="20%">
+							<strong>Artist</strong>
+						</th>
+						<th>
+							<div class="event-approval-td-div">
+								<i class="fa fa-thumbs-up" style="font-size: 1.8rem; margin: 5px; color: #000"></i>
+								<br/> 
+								<strong>Pick</strong><br/>								
+							</div>								
+						</th>
+						<th>
+							<div class="event-approval-td-div">
+								<img src="./assets/eventalliance/media/img/users/public.png" class="event-approval-table-img"/>
+								<br/>
+								<strong>Public Approval</strong><br/>
+								<!-- <small>Approval % (Total Voters)</small> -->
+							</div>								
+						</th>
+						<th>
+							<div class="event-approval-td-div">
+								<img src="./assets/eventalliance/media/img/event/hella-big-air.jpg" class="event-approval-table-img"/>
+								<br/>
+								<strong>Team Approval</strong><br/>
+								<!-- <small>Progress 63%</small> -->
+							</div>
+						</th>
+						<th *ngFor="let member of eventSurveyMembers">
+							<div class="event-approval-td-div">									
+								<img [src]='member.profile_pic == null ? "./assets/eventalliance/media/img/no-image.jpg" : photoUrl + "user/" + member.profile_pic' class="event-approval-table-img">
+								<br/>
+								<strong>{{member.first_name}} {{member.last_name}}</strong><br/>
+							</div>
+						</th>
+						<th>&nbsp;</th>
+					</tr>						
+					<tbody>
+
+						<tr *ngFor="let item of eventArtistSurveyProp" >
+							
+							<td>
+								<div class="float-left">
+								<img *ngIf = "eventArtistSurvey[item].artistProfilePicture == null" src="./assets/eventalliance/media/img/users/user4.jpg" style="border-radius: 50%; height:50px; width:50px;"  alt="" />
+								<img *ngIf = "eventArtistSurvey[item].artistProfilePicture != null" src="{{eventArtistSurvey[item].artistProfilePicture}}" style="border-radius: 50%; height:50px; width:50px;"  alt="" />
+								
+								&nbsp;&nbsp;&nbsp; 
+								</div>
+								<div class="float-left">
+									<strong>
+										<a routerLink="/artist-details/{{eventArtistSurvey[item].artistId}}" class="m-menu__link">
+											<span class="m-menu__item-here"></span>
+											<span class="m-menu__link-text">
+												{{item}}
+											</span> 
+										</a>											
+									</strong>
+									<!-- <br/>
+									<small>Folk, Blues</small>  -->
+								</div>									
+							</td>
+							<td align="center" >									
+								<span *ngIf= "eventArtistSurvey[item].isPicked == 1" class="m-badge m-badge--success m-badge--wide">
+									&nbsp;<a href="javascript:void(0)" style="color: #ffffff"> <i class="fa fa-thumbs-up" alert="Picks Now"></i> </a>
+								</span>
+								<span *ngIf= "eventArtistSurvey[item].isPicked == 0" class="m-badge m-badge--metal m-badge--wide">
+									&nbsp;<a href="javascript:void(0)" (click)="savePick(eventArtistSurvey[item].artistId)" style="color: #ffffff"> <i class="fa fa-thumbs-up" alert="Picks Now"></i> </a>
+								</span>
+							</td>
+							<td align="center">
+								<span class="m-badge m-badge--success m-badge--wide" >
+									{{eventArtistSurvey[item].public}}%
+								</span>
+							</td>
+							<td align="center">
+								<span class="m-badge m-badge--success m-badge--wide" >
+									{{eventArtistSurvey[item].team}}%
+								</span>
+							</td>
+							<td align="center" *ngFor="let survey of eventArtistSurvey[item].members; let i = index;">
+								<span *ngIf ="survey==null" class="m-badge m-badge--metal m-badge--wide">
+									<i class="fa fa-question"></i>
+								</span>
+
+								<span *ngIf = "survey==0" class="m-badge m-badge--danger m-badge--wide">
+									<i class="fa fa-times"></i>
+								</span>
+
+								<span *ngIf = "survey==1" class="m-badge m-badge--success m-badge--wide">					
+									<i class="fa fa-check"></i>
+								</span>					
+
+							</td>								
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

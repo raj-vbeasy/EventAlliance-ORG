@@ -1,0 +1,154 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+	<div class="m-subheader-search">
+		<h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+			Teams
+		</h1>
+		<div class="m-grid m-grid--ver-desktop m-grid--desktop">
+			<div class="m-grid__item m-grid__item--middle">
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+					<input class="form-control form-control-sm m-input" placeholder="Keyword" type="text" [(ngModel)]="keyword">
+				</div>
+				<!--
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+					<select class="form-control m-hrader-search-form__select">
+						<option *ngFor="let teamrole of teamroles" [value]="teamrole.id">{{teamrole.roleName}}</option>
+					</select>
+				</div>
+			    -->
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+					<button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="searchTeams()">
+						Search
+					</button>
+				</div>
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+					<button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="resetTeamsData()">
+						Reset
+					</button>
+				</div>
+				<a *ngIf="currentUser.user_type==0" data-toggle="modal" data-target="#addTeam" href="#" class="m-menu__link">
+					<button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="openTeamAddModal()">
+						ADD TEAM
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+
+<!-- Team List for Datatable -->
+<div class="m-content">
+	<div class="col-lg-12">
+		<div class="m-portlet m-portlet--tabs">
+			<div class="m-portlet__body">					
+				<div id="team_datatable" (click)="TableClick($event)"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Team List for Datatable -->
+
+<!-- Team Edit Modal -->
+<div class="modal fade" id="editTeam" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			
+				<div class="m-stack__item m-stack__item--center">
+					<div class="m-card-profile">
+						<div class="m-card-profile__pic">
+							<div class="m-card-profile__pic-wrapper">
+								<img (click)="imgClick()" [src]='formData.photo == null ? "./assets/eventalliance/media/img/no-image.jpg" : formData.photo'  alt="" style="height: 80px; width: 80px;" alt="">
+								<input (change)="onTeamImageChange($event)" type="file" class="d-none" #teamImage>
+							</div>
+						</div>
+						<div class="m-card-profile__details">
+							<small>Click on the image to select a new one</small>
+
+						</div>
+						<div class="form-group m-form__group">
+							<label for="exampleInputEmail1">Team Name</label>
+							<input [(ngModel)]="formData.name" [ngModelOptions]="{standalone: true}" type="text" class="form-control m-input m-input--square" aria-describedby="emailHelp" placeholder="Town of Frisco">
+						</div>
+						
+
+					</div>
+					<div>
+						<hr/>
+						<div>
+							<h5 style="color:#575962">Members</h5>
+						</div>
+
+
+
+						<div class="row" *ngIf="currentUser.user_type==0"> 							
+								<div class="col-md-4">
+									 <!-- <select class="form-control m-input m-input--solid" [(ngModel)]="selectedRoleId" (change)="TeamRoleChangeEvent($event.target.value)">
+										<option *ngFor="let teamrole of teamroles" [value]="teamrole.id">{{teamrole.roleName}}</option>
+									</select>  -->
+
+									 <select class="form-control m-input m-input--solid" [(ngModel)] = "selectedRoleId" (change)="TeamRoleChangeEvent($event.target.value)">
+											<option value="-1" selected="">-- Select --</option>
+											<!-- <option *ngIf="currentUser.user_type==0" value="0">Super Admin</option> -->
+											<option *ngIf="currentUser.user_type==0" value="1">Team Admin</option>
+											<option value="2">Team Member</option>
+											<option *ngIf="currentUser.user_type==0" value="3">EA Representative</option>
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="form-control m-input m-input--solid" style="width: 100%" id="cmbMember" [(ngModel)]="selectedMemberId"></select>
+								</div>
+								<div class="col-md-3 m--align-right">
+									<button type="reset" class="btn btn-success" (click)="addMemberToTeam()">Add Member</button>
+								</div>
+						</div>
+
+						<br>
+					
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th width="20%">Role</th>
+									<th width="10%">Status</th>
+									<th width="10%" align="right" *ngIf="currentUser.user_type==0">&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								 <tr *ngFor="let member of formData.members">
+									<td>
+										<strong>{{ member.name }}</strong>
+									</td>
+									<td>{{ member.role }}</td>
+									<td>
+										<select *ngIf="member.roleId == 2" class="cmb_member_status" [(ngModel)]="member.status" (change)="memberStatus($event.target.value,member)">
+											<option value="1" >Active</option>
+											<option value="0">Inactive</option>
+										</select>
+									</td>
+									<td align="right" *ngIf="currentUser.user_type==0">
+										<a href="javascript:void(0);" (click)="deleteMember(member)" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete"><i class="la la-trash"></i></a>
+									</td>
+								</tr> 
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">				
+				<button type="button" class="btn btn-outline-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" data-dismiss="modal">Cancel</button>
+				<button type="button" [disabled]="!saveButtonActive" (click)="SaveTeam()" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase">Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- End Team Edit Modal -->

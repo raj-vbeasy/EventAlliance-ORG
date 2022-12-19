@@ -1,0 +1,96 @@
+<div class="modal-header">
+	<h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+	<h5 class="modal-title" style="margin: 0 auto;">{{artistTitle}}</h5>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 0px;">
+		<span aria-hidden="true">×</span>
+	</button>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-xl-1" style="text-align:center; display: grid; grid-template-rows: 1fr; align-items: center;">
+			<a (click)="prevStep()" *ngIf="this.step>=1 && this.step < this.totalStepCount" style="cursor: pointer"><i class="fa fa-angle-left" style="font-size: 100px"></i></a>
+			<a (click)="prevStep()" *ngIf="this.step<1" style="cursor:not-allowed;"><i class="fa fa-angle-left" style="font-size: 100px;color:#c7c7c7"></i></a>
+		</div>
+		<div class="col-xl-10" id="vedio_container" *ngIf="this.step < this.totalStepCount">
+			<div class="m-card-profile" >	
+				<div id="youtubeVideoContainer" class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height: 360px">
+					<iframe width="620" *ngIf="videoUrl!=null" id="videoFrame" frameborder="0" height="360" style="padding:0" [src]="videoUrl"></iframe>							
+				</div>				
+				<br/>
+			</div>
+		</div>
+		<div class="col-xl-10" *ngIf="this.step >= this.totalStepCount" >
+			<div class="m-card-profile text-center">	
+					Thank you for taking the {{title}} survey.		
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+			</div>
+		</div>
+		<div class="col-xl-1" style="text-align:center; display: grid; grid-template-rows: 1fr; align-items: center;">
+			<a (click)="nextStep()" *ngIf="this.step < this.totalStepCount" style="cursor: pointer"><i class="fa fa-angle-right" style="font-size: 100px;"></i></a>
+			
+		</div>
+	</div>
+	<div class="col-xl-10 offset-xl-1" *ngIf="this.step < this.totalStepCount">
+		{{video.title}}
+		<table class="table">
+			<tbody>
+				<tr *ngFor="let artistVideo of surveyArtistVideos; let i = index;" [style.display]="(videoStep==i ? 'block' : 'none')" (click)="openVideoUrl(i)" style="cursor:pointer">
+					<td width='10%'>
+						<a (click)="prevVideo($event)" *ngIf="videoStep > 0" class="btn btn-clear" >
+						<i class="fa fa-angle-left" style="font-size: 50px;"></i>
+						</a>
+						<a (click)="prevVideo($event)" *ngIf="videoStep <= 0" style="cursor:not-allowed;color:#c7c7c7;" class="btn btn-clear" >
+						  <i class="fa fa-angle-left" style="font-size: 50px;"></i>
+						</a>
+					</td>
+					<td width='15%'>
+						<img src="{{ artistVideo.thumbnailsUrl }}" style=" height:70px; width:95px;" alt="" /> 
+					</td>
+					<td width='60%'> <strong>{{ artistVideo.videoTitle}}</strong>
+						<br/>
+						<small>{{ artistVideo.videoDescription }}</small>
+					</td>
+					<td width='10%'>
+						<a (click)="nextVideo($event)" *ngIf="videoStep < (videoCount-1)" class="btn btn-clear" >
+						<i class="fa fa-angle-right" style="font-size: 50px;"></i>
+						</a>
+						<a (click)="nextVideo($event)" *ngIf="videoStep >= (videoCount-1)" style="cursor:not-allowed;color:#c7c7c7;" class="btn btn-clear" >
+						  <i class="fa fa-angle-right" style="font-size: 50px;"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="modal-footer" *ngIf="this.step < this.totalStepCount">
+	<div style="width:50%;">
+		<!-- <div  *ngFor="let vote of memberVotesByArtistID;" style=" float:left;padding: 0 3px;">
+			<img *ngIf="vote.vote==null" class="member_img_vote_null"  style="height: 50px; width: 50px" [src]='vote.photo == null ? "./assets/eventalliance/media/img/no-image.jpg" : environment.graphicsBaseUrl + "user/" + vote.photo' alt="">
+			<img *ngIf="vote.vote!=null" class="member_img_vote_{{vote.vote}}" style="height: 50px; width: 50px" [src]='vote.photo == null ? "./assets/eventalliance/media/img/no-image.jpg" : environment.graphicsBaseUrl + "user/" + vote.photo' alt="">
+		</div> -->
+		<div  *ngFor="let vote of memberVotesByArtistID;" style=" float:left;padding: 0 3px;">
+			<img *ngIf="vote.vote==null" class="member_img_vote_null"  style="height: 50px; width: 50px" [src]='vote.photo == null ? "./assets/eventalliance/media/img/no-image.jpg" : environment.graphicsBaseUrl + "user/" + vote.photo' alt="">
+			<img *ngIf="vote.vote!=null" class="member_img_vote_{{vote.vote}}" style="height: 50px; width: 50px" [src]='vote.photo == null ? "./assets/eventalliance/media/img/no-image.jpg" : environment.graphicsBaseUrl + "user/" + vote.photo' alt="">
+		</div>
+		
+	</div>
+	<div style="width:50%; float:right;">
+		<div class="pull-right">
+			<div class="float-right">
+					<a (click)="vote(0)" class="btn btn-outline-danger m-btn--outline-2x m-btn--uppercase">
+						NOPE
+					</a>
+			</div>
+			<div class="float-right" style="margin-right:5px;">
+				<a (click)="vote(1)" class="btn btn-outline-success m-btn--outline-2x m-btn--uppercase" style="padding: .65rem 1.35rem;">
+					YEP
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

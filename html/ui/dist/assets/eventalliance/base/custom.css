@@ -1,0 +1,244 @@
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Rubik', sans-serif !important;
+}
+
+.btn {
+    font-family: 'Rubik', sans-serif !important;
+}
+
+.m-menu__link-text {
+    font-weight: bold !important;
+}
+
+.m-hrader-search-form__help {
+    color: #ffffff !important;
+}
+
+.m-hrader-search-form__select option {
+    color: #575962;
+}
+
+.m-link {
+    color: #02af9a !important;
+}
+
+.m-brand {
+    background: #2f6f93 !important;
+}
+
+.profile_team_img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.artist_availability_sidepanel {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+
+.event-date{
+    background-color:  #e5e5e5;
+    padding: 5px 20px 5px 20px;
+    text-align: center;
+    line-height: 22px;
+}
+
+.m-subheader-search{
+    padding-top: 100px !important;
+    margin-bottom: 40px;
+}
+
+.event-approval-table-img{
+    border-radius: 50%;
+    height:35px; 
+    width:35px;
+
+}
+
+
+.event-approval-td-div {
+    text-align: center;
+}
+/*placeholder color*/
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #a2b0bb !important;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #a2b0bb !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #a2b0bb !important;
+}
+
+
+/* artist details sub-heder menu*/
+
+.m-tabs-line a.m-tabs__link,
+.m-tabs-line.nav.nav-tabs .nav-link {
+    background: 0 0;
+    color: #ffffff !important;
+}
+
+.m-tabs-line.m-tabs-line--white a.m-tabs__link:hover,
+.m-tabs-line.m-tabs-line--white.nav.nav-tabs .nav-link:hover {
+    border-bottom: 1px solid #ffffff
+}
+
+.m-tabs-line.m-tabs-line--white a.m-tabs__link.active,
+.m-tabs-line.m-tabs-line--white a.m-tabs__link:hover,
+.m-tabs-line.m-tabs-line--white.nav.nav-tabs .nav-link.active,
+.m-tabs-line.m-tabs-line--white.nav.nav-tabs .nav-link:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff
+}
+
+.m-tabs-line.m-tabs-line--white a.m-tabs__link.active > i,
+.m-tabs-line.m-tabs-line--white a.m-tabs__link:hover > i,
+.m-tabs-line.m-tabs-line--white.nav.nav-tabs .nav-link.active > i,
+.m-tabs-line.m-tabs-line--white.nav.nav-tabs .nav-link:hover > i {
+    color: #ffffff
+}
+
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white a.m-tabs__link:hover,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white.nav.nav-tabs .nav-link:hover {
+    border-bottom: 1px solid #ffffff
+}
+
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white a.m-tabs__link.active,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white a.m-tabs__link:hover,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white.nav.nav-tabs .nav-link.active,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white.nav.nav-tabs .nav-link:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff
+}
+
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white a.m-tabs__link.active > i,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white a.m-tabs__link:hover > i,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white.nav.nav-tabs .nav-link.active > i,
+.m-tabs-line.m-tabs-line--skin-dark.m-tabs-line--white.nav.nav-tabs .nav-link:hover > i {
+    color: #ffffff
+}
+
+/******************************************************/
+
+/*header panel btn custom css*/
+.btn-custom-header-panel{
+    position: absolute; 
+    top:-57px;
+    color: #fff;
+    background-color: #2a9c85;
+    border-color: #299983;
+    right:0;
+    margin-right: 40px;
+    padding: 15px 15px;
+    -webkit-box-shadow: 0px 16px 26px -9px rgba(0,0,0,0.75) !important;
+    -moz-box-shadow: 0px 16px 26px -9px rgba(0,0,0,0.75) !important;
+    box-shadow: 0px 16px 26px -9px rgba(0,0,0,0.75) !important;
+    max-width: 100% !important;
+}
+
+.header-floating-action-button{
+    position: absolute;
+    top: 114px;
+    z-index: 5;
+}
+
+.header-floating-action-button-event{
+    position: absolute;
+    top: 200px;
+    z-index: 5;
+}
+
+.header-floating-action-button-event-details{
+        position: absolute;
+    top: 216px;
+    z-index: 5;
+}
+
+.member_img_vote_null{
+    border: 2px solid #ccc;
+	border-radius: 50%;
+	border-radius:50%;
+}
+
+.member_img_vote_1{
+    border: 2px solid #68c965;
+	border-radius: 50%;
+	border-radius:50%;
+}
+
+.member_img_vote_0{
+    border: 2px solid #f4516c;
+	border-radius: 50%;
+	border-radius:50%;
+}
+.m-login__welcome {
+    text-align: center;
+}
+
+.artist-insight-counts .count{
+    margin-top: -25px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.artist-insight-counts small{
+    margin-bottom: 10px;
+    display: block;
+}
+
+@media (max-width: 1024px)  {
+    .m-grid__item .m-grid__item--middle{
+        margin-top: 0!important;
+    }
+}
+ .m-subheader-search .select2-container--default .select2-selection--single{
+    background-color: #2F6F93 !important;
+    color: #ffffff !important;
+    border-color: #5D7F98 !important;
+}
+
+.m-subheader-search .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #fff;
+}
+.m-subheader-search .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #fff;
+}
+
+ .select2-container--default .select2-dropdown {
+    width: 320px !important
+}
+#bulkDelete:hover, #bulkDelete:active, #bulkDelete:focus, #bulkDelete:visited {
+    color: #FFFFFF;
+    background-color: #68c965;
+    border-color: #68c965;
+}
+
+#deleteTriger:hover, #deleteTriger:active, #deleteTriger:focus, #deleteTriger:visited {
+    color: #FFFFFF;
+    background-color: #f4516c;
+    border-color: #f4516c;
+}
+/* 14-02-2019*/
+.m-card-user.m-card-user--skin-dark .m-card-user__details .m-card-user__name {
+    color: #7a7a7a !important;
+}
+
+.m-widget1__item .m-widget1__desc {
+    color: #7a7a7a !important;
+}
+.m-badge.m-badge--metal {
+    background-color: #7a7a7a !important;    
+}
+.m-badge.m-badge--success {
+    background-color: #38ca33 !important;    
+    font-weight: 700;
+}
+.m-datatable.m-datatable--default > .m-datatable__table > .m-datatable__body .m-datatable__row > .m-datatable__cell > span {
+    color: #7a7a7a !important; 
+}

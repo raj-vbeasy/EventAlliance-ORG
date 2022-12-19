@@ -1,0 +1,52 @@
+<div class="m-content">
+    <div class="row">
+        <div class="col-xl-10 offset-xl-1">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        {{title}}
+                    </h5>
+                </div>
+
+                <div class="modal-body">
+                    <public-survey-component 
+                    (onNewQuestion)="isQuestionAnswered=false" 
+                    (onQuestionAnswered)="isQuestionAnswered=true" 
+                    (onStepChange)="changeStep($event)" 
+                    (onQuestionsSectionToggle)="toggleQuestionsSection($event)" 
+                    (onArtistsSectionToggle)="toggleVotingButtons($event)" 
+                    [eventId]="eventId" 
+                    [step]="surveyStep" 
+                    (onTitleChange)="titleChange($event)" 
+                    (onLastStep)="isLastStep=1" 
+                    (onFirstStep)="isFirstStep=1">
+                    	
+                    </public-survey-component>
+                </div>
+                
+                <div class="modal-footer" [style.display]="((isLastStep==1 || isFirstStep==1) ? 'none' : 'block')">
+					<div class="float-left" [style.display]="((isFirstStep==0 && !isInArtistSection && !isLastStep) ? 'block' : 'none')">
+						<a (click)="surveyStep=surveyStep-1; isLastStep = 0;" class="btn btn-outline-accent m-btn--outline-2x m-btn--uppercase">
+							PREV
+						</a>
+					</div>
+					<div class="float-right" [style.display]="isInArtistSection ? 'block' : 'none'">
+						<a (click)="vote(0)" class="btn btn-outline-danger m-btn--outline-2x m-btn--uppercase" style="padding: .75rem 1.7rem;">
+							NOPE
+						</a>
+					</div>
+					<div class="float-right" [style.display]="isInArtistSection ? 'block' : 'none'">
+						<a (click)="vote(1)" class="btn btn-outline-success m-btn m-btn--custom m-btn--bolder m-btn--uppercase" >
+							YEP
+						</a>
+					</div>
+					<div class="float-right" [style.display]="((isLastStep==0 && isFirstStep==0 && !isInArtistSection) ? 'block' : 'none')">
+						<a (click)="nextStep()" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+							NEXT
+						</a>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>

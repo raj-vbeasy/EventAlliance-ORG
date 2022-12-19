@@ -1,0 +1,26 @@
+[11-Jun-2018 04:12:25 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Database/TypeMap.php on line 217
+[14-Jun-2018 04:14:06 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[18-Jun-2018 04:12:44 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[21-Jun-2018 04:11:14 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Error/Debugger.php on line 558
+[25-Jun-2018 04:13:07 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[28-Jun-2018 04:11:36 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[02-Jul-2018 04:13:28 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[05-Jul-2018 04:15:06 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 103
+[09-Jul-2018 04:15:30 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Database/Statement/PDOStatement.php on line 71
+[12-Jul-2018 04:14:50 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[16-Jul-2018 04:15:22 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[23-Jul-2018 04:13:53 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[26-Jul-2018 04:14:37 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[30-Jul-2018 04:14:33 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[02-Aug-2018 04:01:05 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Error/Debugger.php on line 862
+[06-Aug-2018 04:13:05 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Database/ValueBinder.php on line 69
+[09-Aug-2018 04:12:54 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 103
+[13-Aug-2018 04:01:06 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Utility/Text.php on line 230
+[16-Aug-2018 04:12:49 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[23-Aug-2018 04:01:32 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/vendor/cakephp/cakephp/src/Error/Debugger.php on line 850
+[27-Aug-2018 04:16:06 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[30-Aug-2018 04:14:00 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 97
+[03-Sep-2018 04:15:17 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/earabidminds/public_html/staging/api/src/Shell/CronShell.php on line 103
+[06-Sep-2018 04:00:22 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33554432 bytes) in /home/earabidminds/public_html/staging/api/vendor/cakephp/chronos/src/Chronos.php on line 146
+[10-Sep-2018 04:00:23 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33554432 bytes) in /home/earabidminds/public_html/staging/api/vendor/cakephp/chronos/src/Chronos.php on line 146
+[13-Sep-2018 04:00:25 UTC] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 33554432 bytes) in /home/earabidminds/public_html/staging/api/vendor/cakephp/chronos/src/Chronos.php on line 146

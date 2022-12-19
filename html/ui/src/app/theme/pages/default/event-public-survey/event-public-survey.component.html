@@ -1,0 +1,165 @@
+<event-details-page-header (onPublicSurveyModalClose)="ReloadData()" [eventDetails]="eventDetails" [page]="'survey'"></event-details-page-header>
+
+<div class="m-content" style="padding-left: 15px; padding-right: 15px;">
+	<div class="m-portlet">
+		<div class="m-portlet__body  m-portlet__body--no-padding">
+			<div class="row m-row--no-padding m-row--col-separator-xl">
+				<div class="col-xl-3">
+					<!--begin:: Widgets/Stats2-1 -->
+					<div style="padding: 30px 15px 10px 15px;">
+						<div class="row no-gutters">
+							<div class="col-md-8">
+								<h6 class="text-muted">
+									Complete Responses
+								</h6>
+								<!-- <span class="m-widget1__desc">
+									
+								</span> -->
+							</div>
+							<div class="col-md-4 ">
+								<span class="float-right ">
+									<h2 style="font-size: 2.8rem;font-weight: 400;">										
+										 {{publicSurveyCount}}
+									</h2>
+								</span>
+							</div>
+						</div>
+					</div>
+					<!--end:: Widgets/Stats2-1 -->
+				</div>
+				<div class="col-xl-3">
+					<!--begin:: Widgets/Daily Sales-->
+					<div style="padding: 30px 15px 10px 15px;">
+						<div class="row no-gutters">
+							<div class="col-md-8">
+								<h6 class="text-muted">
+									Opt-Ins <a [attr.href]="surveyDataDownloadUrl" target="_blank"> <i class="fa fa-download"></i> </a>
+								</h6>
+								
+								<span class="m-widget1__desc">
+									{{ conversion_rate | number:'1.0-0' }}% Conversion Rate
+								</span>
+							</div>
+							<div class="col-md-4 ">
+								<span class="float-right ">
+									<h2 style="font-size: 2.8rem;font-weight: 400;">
+										 {{optInsCount}} 
+									</h2>
+								</span>
+							</div>
+						</div>
+					</div>
+					<!--end:: Widgets/Daily Sales-->
+				</div>
+				<div class="col-xl-6">
+					<!--begin:: Widgets/Profit Share-->
+					<div style="padding: 30px 15px 10px 15px;">
+						<div class="row no-gutters">
+							<div class="col-md-3">
+								<h6 class="text-muted">
+									Settings
+								</h6>
+								<span class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66; ">
+									Survey {{eventDetails.public_survey_status}}
+									<i class="fa fa-check"></i>
+								</span>
+							</div>
+							<div class="col-md-9 ">
+								<span class="m-widget1__desc">
+									<small>Public Survey Link</small>
+								</span>
+								<br/>
+								<form class="form-inline">
+									<label class="sr-only" for="inlineFormInput">Name</label>
+									<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" value="{{environment.websiteUrl + 'survey/' + eventId}}">
+									<button (click)="copySurveyUrl()" type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x">Copy</button>&nbsp;
+									
+									<a  data-target="#eventReview" (click) ="surveyModal()" href="#" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x">
+										Preview
+									</a>
+
+								</form>
+
+							</div>
+
+						</div>
+					</div>
+					<!--end:: Widgets/Profit Share-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" style="margin-left:0; margin-right:0"> 
+		<div class="col col-md-6" *ngFor="let chartData of questionAnswersCartData;">
+			<div class="m-portlet m-portlet--bordered-semi  m-portlet--fit ">
+				<div class="m-portlet__body">
+					<div class="m-widget14">
+						<div class="m-widget14__header" style="height: 60px">
+							<span class="m-widget14__desc">
+								<strong>
+									{{chartData.title}}
+								</strong>
+							</span>
+						</div>
+						<div class="row  align-items-center">
+							<div class="col">
+								<div id="m_chart_profit_share" class="m-widget14__chart">
+									<!-- <canvas id="publicSurveyChart" style="height: 130px" height="130">70%</canvas> -->
+									<!-- <div class="m-widget14__stat">
+										70%
+									</div> -->
+									<canvas style="height: 100px" baseChart
+									  [options] = "chartOptions"
+						              [data]="chartData.values"
+						              [labels]="chartData.labels"
+						              [chartType]="chartType"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="modal fade" id="eventReview" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<public-survey-component (onStepChange)="changeStep($event)" (onArtistsSectionToggle)="toggleVotingButtons($event)" [eventId]="eventId" [step]="surveyStep" (onTitleChange)="titleChange($event)" (onLastStep)="isLastStep=1" (onFirstStep)="isFirstStep=1"></public-survey-component>
+			</div>
+			
+			<div class="modal-footer" [style.display]="((isLastStep==1 || isFirstStep==1) ? 'none' : 'block')">
+				<div class="float-left" [style.display]="((isFirstStep==0 && !isInArtistSection && !isLastStep) ? 'block' : 'none')">
+					<a (click)="surveyStep=surveyStep-1; isLastStep = 0;" class="btn btn-outline-accent m-btn--outline-2x m-btn--uppercase">
+						PREV
+					</a>
+				</div>
+				<div class="float-right" [style.display]="isInArtistSection ? 'block' : 'none'">
+					<a (click)="vote(0)" class="btn btn-outline-danger m-btn--outline-2x m-btn--uppercase">
+						NOPE
+					</a>
+				</div>
+				<div class="float-right" [style.display]="isInArtistSection ? 'block' : 'none'">
+					<a (click)="vote(1)" class="btn btn-outline-success m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+						YEP
+					</a>
+				</div>
+				<div class="float-right" [style.display]="((isLastStep==0 && isFirstStep==0 && !isInArtistSection) ? 'block' : 'none')">
+					<a (click)="surveyStep=surveyStep+1; isFirstStep = 0;" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+						NEXT
+					</a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>

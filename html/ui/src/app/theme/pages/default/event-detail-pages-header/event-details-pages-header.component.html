@@ -1,0 +1,85 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+	<div class="m-subheader-search" style="padding-bottom: 0;">
+		<!-- <button *ngIf="eventDetails.id" (click)="privateSurveyModal()"  class="btn m-btn--pill m-btn--air btn-custom-header-panel header-floating-action-button-event-details" type="button" style="width:50px;" >	       
+	    </button> -->  
+	    <!-- <div >
+			<button  class="btn m-btn--pill m-btn--air btn-custom-header-panel"  style="top: 120px;" >
+                <i class="fa fa-edit"></i>
+        	</button>
+    	</div> -->
+		<button *ngIf="eventDetails.id" (click)="privateSurveyModal(eventDetails.review_enable)"  class="btn m-btn--pill m-btn--air btn-custom-header-panel header-floating-action-button-event-details" type="button" style="width:100px;height: 40px; padding: 5px;" >
+	        <!-- <i class="fa fa-play"></i> -->Survey
+	    </button>  
+		<div class="row">
+			<div class="col-md-1">
+				<img [src]="eventDetails.profile_picture ? (environment.graphicsBaseUrl + 'event/' + eventDetails.profile_picture) : './assets/eventalliance/media/img/no-image.jpg'" style="border-radius: 50%; height: 80px; width: 80px" alt="" />
+			</div>
+			<div class="col-md-10">
+				<p style="color: #fff;margin: 0;">
+					{{eventDetails.city}}
+				</p>
+				<h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+					{{eventDetails.name}}
+				</h1>
+				<span style="color:#fff;">{{ eventDetails.start_date | date:'shortDate' }} - {{ eventDetails.end_date | date:'shortDate' }}</span>&nbsp;
+				<!--
+				<span *ngIf="eventDetails.status==1" class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66; ">
+					Churn
+				</span>
+				<span *ngIf="eventDetails.status==2" class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66; ">
+					In-Review
+				</span>&nbsp;
+				<span *ngIf="eventDetails.status==3" class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66; ">
+					Quote Request
+				</span>&nbsp;
+				<span *ngIf="eventDetails.status==4" class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66; ">
+					Booked
+				</span>&nbsp;
+				<br/>
+				-->
+				<!-- start menu -->
+ 
+				<ul class="nav nav-tabs  m-tabs-line  m-tabs-line--2x m-tabs-line--white" style="margin-bottom:-1px;" role="tablist">
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" [class.active]="page=='summary'" data-toggle="tab" routerLink="/event-summary/{{eventDetails.id}}" role="tab">
+							<small>Summary</small>
+						</a>
+					</li>
+
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" [class.active]="page=='approval'" data-toggle="tab" routerLink="/event-approval/{{eventDetails.id}}" role="tab">
+							<small>Approval</small>
+						</a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" [class.active]="page=='survey'" data-toggle="tab" routerLink="/event-public-survey/{{eventDetails.id}}" role="tab">
+							<small>Public Survey</small>
+						</a>
+					</li>
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" [class.active]="page=='picks'" data-toggle="tab" routerLink="/event-picks/{{eventDetails.id}}" role="tab">
+							<small>Team Picks</small>
+						</a>
+					</li>
+
+				</ul>
+				<!-- end menu -->	
+				<!-- <div >
+					<button  class="btn m-btn--pill m-btn--air btn-custom-header-panel" type="button" style="top: 120px;" >
+	                    <i class="la la-plus"></i>
+	            	</button>
+            	</div> -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+
+<div class="modal fade" id="privateSurvey" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<private-survey-component [eventId]="eventDetails.id" [(step)]="step" (onStepChange)="stepChange($event);"></private-survey-component>
+		</div>
+	</div>
+</div>

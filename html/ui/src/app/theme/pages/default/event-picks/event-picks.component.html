@@ -1,0 +1,101 @@
+<event-details-page-header (onPicksModalClose)="ReloadData()" [eventDetails]="eventDetails" [page]="'picks'"></event-details-page-header>
+
+
+<div class="m-content" style="padding-left: 15px; padding-right: 15px;">
+	<div class="col-md-12">
+		<div class="m-portlet m-portlet--bordered-semi  m-portlet--fit " >
+			<div class="m-portlet__head">
+				<div class="m-portlet__head-caption">
+					<div class="m-portlet__head-title">
+						<h3 class="m-portlet__head-text">
+							Artist Review
+						</h3>
+					</div>
+				</div>
+			</div>
+			<div class="m-portlet__body">
+				<table class="table" >
+					<thead>
+						<tr>
+							<th width="25%">Name</th>
+							<th width="15%">Quote Status</th>
+							<th width="20%">Quote Cost</th>
+							<th width="20%">Public Approval</th>
+							<th width="10%">Team Approval</th>
+							<th width="10%" align="right">&nbsp;</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of eventArtistSurveyProp">
+							<td>
+								<img *ngIf = "eventArtistSurvey[item].artistProfilePicture == null" src="./assets/eventalliance/media/img/users/user4.jpg" style="border-radius: 50%; height:50px; width:50px;"  alt="" />
+								<img *ngIf = "eventArtistSurvey[item].artistProfilePicture != null" src="{{eventArtistSurvey[item].artistProfilePicture}}" style="border-radius: 50%; height:50px; width:50px;"  alt="" />
+								&nbsp;&nbsp;&nbsp; 
+								<strong>
+									<a routerLink="/artist-details/{{eventArtistSurvey[item].artistId}}" class="m-menu__link">
+										<span class="m-menu__item-here"></span>
+										<span class="m-menu__link-text">
+											{{item}}
+										</span>
+									</a>
+								</strong>
+								
+							</td>
+							<td>
+								<span (click)="openStatusModal(item)" style="cursor: pointer;" *ngIf="eventArtistSurvey[item].quoteStatus == 0" class="m-badge m-badge--metal m-badge--wide" >No Quote</span>
+								<span (click)="openStatusModal(item)" style="cursor: pointer;" *ngIf="eventArtistSurvey[item].quoteStatus == 1" class="m-badge m-badge--primary m-badge--wide" >In-Progress</span>
+								<span (click)="openStatusModal(item)" style="cursor: pointer;" *ngIf="eventArtistSurvey[item].quoteStatus == 2" class="m-badge m-badge--danger m-badge--wide" >Unavailable</span>
+								<span (click)="openStatusModal(item)" style="cursor: pointer;" *ngIf="eventArtistSurvey[item].quoteStatus == 3" class="m-badge m-badge--success m-badge--wide" >Booked</span>
+							</td>
+							<td>{{eventArtistSurvey[item].budget}}</td>
+							<td>
+								<span class="m-badge m-badge--success m-badge--wide" >
+									{{eventArtistSurvey[item].public}}%
+								</span>
+							</td>
+							<td>
+								<span class="m-badge m-badge--metal m-badge--wide" >
+									{{eventArtistSurvey[item].team}}%
+								</span>
+							</td>
+
+							
+							<td align="right" *ngIf="userType!=2">
+								<a href="javascript:void(0)" (click)="savePick(eventArtistSurvey[item].artistId)">
+									<span class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill btn-delete"><i class="la la-trash"></i></span>
+								</a>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal start form here -->
+<div class="modal fade" id="artistStatus" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Aritst's Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            	<select class="form-control m-input m-input--solid" style="width: 100%" [(ngModel)]="artistStatus">
+            		<option value="0">No Quote</option>
+            		<option value="1">In-Progress</option>
+            		<option value="2">Unavailable</option>
+            		<option value="3">Booked</option>
+            	</select>
+            </div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click) ="UpdatArtistStatus()" >Update Status</button>
+			</div>
+        </div>
+    </div>
+</div>

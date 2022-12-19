@@ -1,0 +1,88 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+    <div class="m-subheader-search">
+        <h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+            Events
+        </h1>
+        <form class="m-form">
+            <div class="m-grid m-grid--ver-desktop m-grid--desktop">
+                <div class="m-grid__item m-grid__item--middle">
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+                        <input class="form-control form-control-sm m-input" placeholder="Keyword" type="text">
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                        <select class="form-control m-hrader-search-form__select">
+                            <option>All Status</option>
+                            <option>Hip hop</option>
+                            <option>Jazz</option>
+                        </select>
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                        <select class="form-control m-hrader-search-form__select">
+                            <option>All Dates</option>
+                            <option>Low Budget</option>
+                            <option>High Budget</option>
+                        </select>
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                        <select class="form-control m-hrader-search-form__select">
+                            <option>All Teams</option>
+                            <option>Last 30 Days</option>
+                            <option>Last 20 Days</option>
+                        </select>
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+                        <button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button">
+                            Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--tabs">
+                <div class="m-portlet__body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="25%">Title</th>
+                                <th width="10%">Status</th>
+                                <th width="17%">Event Date</th>
+                                <th width="15%">Team</th>
+                                <th width="13%">Total Budget</th>
+                                <th width="10%">EA Rep</th>
+                                <th width="10%">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let index of [0,1,2,3,4,5]">
+                                <td>
+                                    <img src="./assets/eventalliance/media/img/users/user4.jpg" style="border-radius: 50%; height:50px; width:50px;" alt="" /> &nbsp;&nbsp;&nbsp;
+                                    <strong>Shubhrajyoti Mallick</strong>
+                                </td>
+                                <td>
+                                    <span class="m-badge m-badge--brand m-badge--wide">Pending</span>
+                                </td>
+                                <td>06/02/2018 - 07/03/2018</td>
+                                <td>Absian Resort</td>
+                                <td>$500k - $750k</td>
+                                <td>Mark O'Roy</td>
+                                <td>
+                                    <i class="fa fa-ellipsis-h"></i>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <i class="fa fa-edit"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

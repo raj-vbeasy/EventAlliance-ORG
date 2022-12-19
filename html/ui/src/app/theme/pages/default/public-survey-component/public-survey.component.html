@@ -1,0 +1,184 @@
+<div class="row" [style.display]="(step==1 ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2">
+		<div class="m-card-profile">
+			<div class="m-card-profile__pic">
+				<div class="m-card-profile__pic-wrapper">
+					<img [src]="eventDetails.profile_picture ? (environment.graphicsBaseUrl + 'event/' + eventDetails.profile_picture) : './assets/eventalliance/media/img/no-image.jpg'" alt="" style="width: 100px;height: 100px;">
+				</div>
+			</div>
+			<div class="m-card-profile__details">
+				<strong>{{ eventDetails.public_survey_title }}</strong>
+				<p>
+					{{ eventDetails.welcome_message }}
+				</p>
+				<div [style.display]="(surveyStatus==1 ? 'block' : 'none')">
+					<a  (click)="takeSurvey();" href="javascript:void(0);" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+						TAKE SURVEY
+					</a>
+				</div>
+				<div [style.display]="(surveyStatus==0 ? 'block' : 'none')">
+					<a  href="javascript:void(0);" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase">
+						SURVEY CLOSE
+					</a>
+				</div>
+
+				<hr/>
+				<small>
+					{{ eventDetails.legal_disclaimer }}
+				</small>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<div class="row" [style.display]="(step==2 ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2">
+		<div class="m-card-profile" style="text-align: center;">
+			<div class="m-card-profile__pic">
+				<div class="m-card-profile__pic-wrapper">
+					<img [src]="eventDetails.profile_picture ? (environment.graphicsBaseUrl + 'event/' + eventDetails.profile_picture) : './assets/eventalliance/media/img/no-image.jpg'" alt="" alt="" style="width: 100px;height: 100px;">
+				</div>
+			</div>
+			<div class="m-card-profile__details">
+				<strong>{{ eventDetails.name }}</strong>
+				<p>
+					{{ eventDetails.description }}
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row" [style.display]="(step==3 ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2">
+		<div class="m-card-profile" style="text-align: center;">
+			<img src="./assets/eventalliance/media/img/misc/demo-youtube.png" alt="" style="width:200px;height:150px;"
+			 class="img-responsive" />
+			<br/>
+			<br/>
+			<div>
+				<button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x uppercase">
+					NOPE
+				</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x uppercase">
+					YEP
+				</button>
+			</div>
+			<br/>
+			<div class="m-card-profile__details">
+				<strong>How to rate this artist</strong>
+				<p>					
+					In the following screens, artists will be offered with links to their videos. Give them a listen and then cast your vote by selecting YEP or NOPE to tell us if you think they should be considered for our event's musical performances.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="row" *ngFor="let artist of eventDetails.event_artists; let j = index;" [style.display]="(step==(4+j) ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2" id="vedio_container">
+		<div class="m-card-profile">	
+			<div id="youtubeVideoContainer" class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+				<iframe width="100%" *ngIf="videoUrl!=null" id="videoFrame" frameborder="0" height="331" style="padding:0 20px 0 20px;" [src]="videoUrl"></iframe>							
+			</div>				
+			{{video.title}} 
+			<table class="table">
+				<tbody>
+					<tr *ngFor="let artistVideo of surveyArtistVideos; let i = index" [style.display]="(videoStep==i ? 'block' : 'none')"  style="cursor:pointer">
+						<td width='10%'>
+							<a (click)="prevVideo($event)" *ngIf="videoStep > 0" class="btn btn-clear" >
+								<i class="fa fa-angle-left" style="font-size: 50px;"></i>
+							</a>
+							<a (click)="prevVideo($event)" *ngIf="videoStep <= 0" style="cursor:not-allowed;color:#c7c7c7;" class="btn btn-clear" >
+							  	<i class="fa fa-angle-left" style="font-size: 50px;"></i>
+							</a>
+						</td>
+
+						<td width='15%'>
+							<img src="{{ artistVideo.thumbnailsUrl }}" style=" height:70px; width:95px;" alt="" /> 
+						</td>
+						<td width='65%'> <strong>{{ artistVideo.videoTitle}}</strong>
+							<br/>
+							<small>{{ artistVideo.videoDescription }}</small>
+						</td>
+
+						<td width='10%'>
+							<a (click)="nextVideo($event)" *ngIf="videoStep < (videoCount-1)" class="btn btn-clear" >
+								<i class="fa fa-angle-right" style="font-size: 50px;"></i>
+							</a>
+							<a (click)="nextVideo($event)" *ngIf="videoStep >= (videoCount-1)" style="cursor:not-allowed;color:#c7c7c7;" class="btn btn-clear" >
+							  	<i class="fa fa-angle-right" style="font-size: 50px;"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br/>
+		</div>
+	</div>
+</div>
+
+
+<div *ngFor="let QuestionAnswers of surveyQuestionAnswers; let i = index" class="row" [style.display]="(step==(4+eventDetails.event_artists.length+i) ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2">
+		<strong>{{QuestionAnswers.questions}}</strong>
+		<br/>
+		<br/>			
+		<div *ngFor="let option of  QuestionAnswers.options"> 
+			<input type="radio" name="option" value="{{option.id}}" (click)="answerOptionClick(option.id)"> {{option.options}} 
+			<br>			
+		</div>			
+	</div>
+</div>
+
+
+<div class="row" *ngIf="eventDetails.opt_in == 1" [style.display]="(step==(totalStepCount-1) ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2">
+        <strong>
+            Do you want to be notified when tickets are on sale for this event?
+            <br><br>
+        </strong>
+        <br>
+        <div class="form-group m-form__group">
+            <label for="exampleInputEmail1">Name</label>
+            <input name="name"  class="form-control m-input m-input--square" [(ngModel)]="surveyInput.name" laceholder="Enter name" type="text">
+            <label for="exampleInputEmail1">Email address</label>
+            <input name="email" id="email" class="form-control m-input m-input--square" [(ngModel)]="surveyInput.email" laceholder="Enter email" type="email" #email>
+	           <!--  
+				<input name="email" required class="form-control m-input m-input--square" [(ngModel)]="surveyInput.email" laceholder="Enter email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #email="ngModel">
+	           <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+	            	<div [hidden]="!email.errors.required">
+			          Email is required!
+			        </div>
+			        <div [hidden]="!email.errors.pattern">
+			          Must be a valid E-mail!
+			        </div>
+	            </div> -->
+            <span class="m-form__help"><br><br>We'll never share your email with anyone else.</span>
+        </div>
+	</div>
+</div>
+
+
+<div class="row" [style.display]="(step==totalStepCount ? 'block' : 'none')">
+	<div class="col-xl-8 offset-xl-2">
+		<div class="m-card-profile">
+				<div class="m-card-profile__pic">
+					<div class="m-card-profile__pic-wrapper">
+						<img [src]="eventDetails.profile_picture ? (environment.graphicsBaseUrl + 'event/' + eventDetails.profile_picture) : './assets/eventalliance/media/img/no-image.jpg'" alt="" style="width: 100px;height: 100px;">
+					</div>
+				</div>
+			<br/>
+			<div class="m-card-profile__details">
+				<p>{{eventDetails.thanks_message}}</p>
+			</div>
+		</div>
+	</div>
+</div>

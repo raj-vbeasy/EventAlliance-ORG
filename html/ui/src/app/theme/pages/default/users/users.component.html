@@ -1,0 +1,186 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+	<div class="m-subheader-search">
+		<h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+			Users
+		</h1>
+		<div class="m-grid m-grid--ver-desktop m-grid--desktop">
+			<div class="m-grid__item m-grid__item--middle">
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+					<input class="form-control form-control-sm m-input" id="keyword" placeholder="Keyword" type="text" [(ngModel)]="search.keyword">
+				</div>
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+					<select class="form-control m-hrader-search-form__select" id="teams" [(ngModel)]="search.teamId">            
+                        <option *ngFor="let team of allTeams" [value]="team.id">{{team.name}}</option> 
+                    </select>
+				</div>
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+					<button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="searchUsers()">
+						Search
+					</button>
+				</div>
+
+				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+					<button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="resetUsersData()">
+						Reset
+					</button>
+				</div>
+
+				<!-- add uer button is visible to Super Admin, Team Admin and EA Representative -->
+				<a *ngIf="currentUser.user_type!=2" data-toggle="modal" data-target="#addUser" href="#" class="m-menu__link">
+					<button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="openCreateUserModal()">
+						ADD USER			
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader -->
+
+
+<div class="m-content">
+	<div class="col-lg-12">
+		<div class="m-portlet m-portlet--tabs">
+			<div class="m-portlet__body">
+				<div (click)="TableClick($event)" class="user_datatable" id="user_datatable"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="editUser" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="m-wizard__form-step" id="m_wizard_form_step_2">
+					<div class="row">
+						<div class="col-xl-8 offset-xl-2">
+							<div class="m-card-profile">
+								<div class="m-card-profile__pic">
+									<div class="m-card-profile__pic-wrapper">
+										<img (click)="userImgClick()" [src]='formData.profile_pic == null ? "./assets/eventalliance/media/img/no-image.jpg" : formData.profile_pic'  alt="" style="height: 80px; width: 80px;">
+										<input (change)="onUserImageChange($event)" type="file" class="d-none" #userImage>
+									</div>
+								</div>
+								<div class="m-card-profile__details">
+									<small>Click on the image to select a new one.</small>
+
+								</div>
+
+							</div>
+							<div class="m-form__section m-form__section--first">
+								<br/>
+								<div class="row">
+									<div class="col-md-6">
+										<label>First Name *</label>
+										<input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.first_name" placeholder="First Name">
+									</div>
+									<div class="col-md-6">
+										<label>Last Name *</label>
+										<input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.last_name" placeholder="Last Name">
+									</div>
+								</div>
+								<br/>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Phone *</label>
+										<input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.phone_no" placeholder="9876543210">
+									</div>
+								</div>
+								<div class="m-separator m-separator--dashed m-separator--lg"></div>
+								<h4>Account</h4>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Email/Username *</label>
+										<input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.email" placeholder="example@mail.com">
+									</div>
+									 <div class="col-md-6">
+										<label>User Role *</label>
+										<select class="form-control m-input m-input--solid" [(ngModel)] = "formData.user_type" (change)="roleChange($event)">
+											<option value="-1" selected="">-- Select --</option>
+											<option *ngIf="currentUser.user_type==0" value="0">Super Admin</option>
+											<option *ngIf="currentUser.user_type==0" value="1">Team Admin</option>
+											<option value="2">Team Member</option>
+											<option *ngIf="currentUser.user_type==0" value="3">EA Representative</option>
+										</select>
+									</div> 
+								</div>
+								<br/>
+								<div class="row">
+									<div class="col-md-6">
+										<label>Password *</label>
+										<input type="password" class="form-control m-input m-input--square" [(ngModel)] ="newPassword" >
+									</div>
+									<div class="col-md-6">
+										<label>Confirm Password *</label>
+										<input type="password" class="form-control m-input m-input--square" [(ngModel)]="confirmPassword">
+									</div>
+								</div>
+
+								<div [style.display]="(teamListBlock==1 ? 'block' : 'none')" >
+									<div class="m-separator m-separator--dashed m-separator--lg"></div>
+										<h4>Teams</h4>
+										<div class="row">
+											<div class="col-md-12">
+												<label>Teams List *</label>
+												<select  multiple="multiple" class="form-control m-input m-input--solid" style="width: 100%"  id="teamsList" [(ngModel)]="selectedTeamId">
+												</select>
+											</div>
+										</div>
+								</div>
+
+
+								<div *ngIf = "formData.id >0">
+									<div class="m-separator m-separator--dashed m-separator--lg"></div>
+									<h4>Teams</h4>
+									<div class="row">
+										<div class="col-md-12">
+											<table class="table">
+												<thead>
+													<tr>
+														<th width="60%">Name</th>
+														<th width="40%">Role</th>
+														<!-- <th width="30%">&nbsp;</th> -->
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let team of formData.teamList">
+														<td>														
+															<img [src]='team.photo == null ? "./assets/eventalliance/media/img/no-image.jpg" : teamPhotoUrl + "team/" + team.photo'   style="border-radius: 50%; height:50px; width:50px;">
+															<strong>{{team.name}}</strong>
+														</td>
+														<td>{{team.role_name}}</td>
+														<!-- <td>
+															<i class="fa fa-ellipsis-h"></i>
+														</td> -->
+													</tr>
+												</tbody>
+											</table>
+											<!-- <button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x uppercase">
+												ADD TO ITEM
+											</button> -->
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" data-dismiss="modal">Cancel</button>
+				<button type="button" [disabled]="!saveButtonActive" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click) ="SaveUser()" >Save</button>
+			</div>
+		</div>
+	</div>
+</div>

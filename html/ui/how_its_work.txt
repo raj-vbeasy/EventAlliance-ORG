@@ -1,0 +1,21 @@
+CHANGE ANY MODULE FORM GOLBAL INCLUDE : We have to enable/disable any component which is globally include like site panel in app.component.html file
+
+# default.component.html This file is like render view mean where the main view is included the layout( like layout and .ctp in CAKEPHP)
+    disabled left side panel
+
+
+# Don't need quick-slidebar.component.html as per design given by client
+
+# I have enable/disable different layout from layout.module.ts file
+
+# assets/eventalliance 
+this path is for project assets like image / custom css /custom js/ etc
+
+
+/************************************/
+/*                                  */
+/*    npm install @angular/cli      */
+/*    npm start                     */
+/*    ng build --prod               */
+/*                                  */
+/************************************/

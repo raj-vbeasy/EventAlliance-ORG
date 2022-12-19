@@ -1,0 +1,406 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+    <div class="m-subheader-search">
+        <h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+            Events
+        </h1>
+            <div class="m-grid m-grid--ver-desktop m-grid--desktop">
+                <div class="m-grid__item m-grid__item--middle">
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+                        <input class="form-control form-control-sm m-input" placeholder="Keyword" type="text" [(ngModel)]="search.keyword">
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                        <select class="form-control m-hrader-search-form__select" [(ngModel)]="search.eventStatus">
+                            <option value="0">All Status</option>
+                            <option value="1">Churn</option>
+                            <option value="2">In-Review</option>
+                            <option value="3">Quote Request</option>
+                            <option value="4">Booked</option>
+                        </select>
+                    </div>
+                    
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
+                        <select class="form-control m-hrader-search-form__select" id="teams" [(ngModel)]="search.teamId">                            
+                            <option *ngFor="let team of allTeams" [value]="team.id">{{team.name}}</option> 
+                        </select>
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+                        <button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="searchEvent()">
+                            Search
+                        </button>
+                    </div>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right" style="width:80px;">
+                        <button class="btn btn-outline-success  m-btn--bolder m-btn--uppercase" type="button" (click)="resetEventsData()">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+                <button *ngIf="currentUser.user_type == 0" class="btn m-btn--pill m-btn--air btn-custom-header-panel header-floating-action-button-event" type="button" (click)="openEventAddModal('add')">
+                    <i class="la la-plus"></i>
+                </button>
+            </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+	<div class="col-lg-12">
+		<div class="m-portlet m-portlet--tabs">
+			<div class="m-portlet__body">
+				<div id="event_datatable" (click)="TableClick($event)"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- modal start form here -->
+<div class="modal fade" id="editEvent" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides">
+                            <li class="m-nav__item" >
+                                <a class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==1}" data-toggle="tab" href="#" (click)="toggleMenu(1)" role="tab">
+                                    <span class="m-nav__link-text">Profile *</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a  class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==2}" data-toggle="tab" href="#" (click)="toggleMenu(2)" role="tab">
+                                    <span class="m-nav__link-text">Location *</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a href="#" class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==3}" (click)="toggleMenu(3)">
+                                    <span class="m-nav__link-text">ACT Preferences *</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a href="#" class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==4}" (click)="toggleMenu(4)">
+                                    <span class="m-nav__link-text">Public Survey</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a href="#" class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==5}" (click)="toggleMenu(5)">
+                                    <span class="m-nav__link-text">Survey Questions</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a href="#" class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==6}" (click)="toggleMenu(6)">
+                                    <span class="m-nav__link-text">Options</span>
+                                </a>
+                            </li>
+                            <li class="m-nav__item">
+                                <a href="#" class="m-nav__link" [ngClass]="{'create-event-active-nav': activatedMenu==7}" (click)="toggleMenu(7)">
+                                    <span class="m-nav__link-text">Members' Access</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-8">
+                        <!-- Profile -->
+                        <div class="m-card-profile" id="div_profile"  role="tabpanel" [style.display]="(activatedMenu==1 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    Profile
+                                </h3>
+                            </div>
+                            <div class="m-card-profile__pic">
+                                <div class="m-card-profile__pic-wrapper">
+                                    <img (click)="profileImgClick()" [src]='formData.profile_picture == null ? "./assets/eventalliance/media/img/no-image.jpg" : formData.profile_picture'  alt="" style="height: 80px; width: 80px;">
+                                    <input (change)="onProfileImageChange($event)" type="file" class="d-none" #profileImage>
+                                </div>
+                            </div>
+                            <div class="m-card-profile__details">
+                                <small>Click on the image to select a new one.</small>
+                            </div>
+
+                            <!-- <div class="form-group m-form__group" *ngIf="totalTeam >=2"> -->
+                                <div class="form-group m-form__group">
+                                <label>Team List *</label>
+                                <select class="form-control m-input m-input--square" [(ngModel)] = "formData.team_id">
+                                    <option *ngFor="let team of getUserTeams" [value]="team.id"> {{team.name}}</option>
+                                </select>                                
+                            </div>
+
+                            <div class="form-group m-form__group">
+                                <label>Event Title *</label>
+                                <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.name"  placeholder="Colorado BBQ Challenge">
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Date Range *</label>
+                                <input id="txtEventDateRange" type="text" class="form-control m-input m-input--square" placeholder="06/02/2018 - 08/02/2018">
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Description</label>
+                                <textarea class="form-control m-input m-input--square" [(ngModel)] = "formData.description" placeholder="Provide a brief description of your event concept"></textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="m-separator m-separator--dashed m-separator--lg"></div> -->
+                        <!-- location -->
+                        <div class="m-card-profile" id="div_location" role="tabpanel" [style.display]="(activatedMenu==2 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    Location
+                                </h3>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Venue Name*</label>
+                                <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.venue_name" placeholder="Venue Name">
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Address 1 *</label>
+                                <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.address_line_1" placeholder="Address 1">
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Address 2 *</label>
+                                <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.address_line_2" placeholder="Address 2">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>City *</label>
+                                    <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.city" placeholder="City">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>State *</label>
+                                    <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.state" placeholder="State">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>ZIP *</label>
+                                    <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.zip" placeholder="Zip Code">
+                                </div>
+                            </div>
+                        </div>
+                       <!--  <div class="m-separator m-separator--dashed m-separator--lg"></div> -->
+                        <!-- act preference -->
+                        <div class="m-card-profile" id="div_act_preference"  [style.display]="(activatedMenu==3 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    ACT Preferences
+                                </h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Total Budget *</label>
+                                    <select class="form-control m-input m-input--square" [(ngModel)]="formData.budget_id">
+                                       <option *ngFor="let eventAmount of amounts" [value]="eventAmount.id">{{eventAmount.amount}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Number of Artists Needed *</label>
+                                    <select class="form-control m-input m-input--square" [(ngModel)]="formData.number_of_artist">
+                                       <option *ngFor="let numberOfArtist of _number_of_artists" [value]="numberOfArtist.id">{{numberOfArtist.number_of_artist}}</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group m-form__group">
+                                <label>Artist Genres *</label>
+                                <br />
+                                <select multiple="multiple" style="width:400px" id="cmbGenres" class="form-control m-input m-input--square select2">
+                                   <option *ngFor="let genre of genres" [value]="genre.id">{{genre.text}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Audience Demographics *</label>
+                                <br />
+                                <select multiple="multiple" style="width:400px" id="cmbDemographics" class="form-control m-input m-input--square select2">
+                                   <option *ngFor="let demographic of demographics" [value]="demographic.id">{{demographic.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="m-separator m-separator--dashed m-separator--lg"></div> -->
+                        <!-- public survey-->
+                        <div class="m-card-profile" id="div_public_survey"  [style.display]="(activatedMenu==4 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    Public Survey
+                                </h3>
+                            </div>
+                             <p>
+                               <!--  <strong>
+                                    Setting>
+                                </strong> -->
+                            </p> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Survery Status *</label>
+                                    <select class="form-control m-input m-input--square" [(ngModel)] = "formData.public_survey_status">
+                                        <option value="Open">Open</option>
+                                        <option value="Close">Close</option>
+                                       
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.url" placeholder="http://google.com">
+                                </div>
+                            </div>
+                           <!--  <br/>
+                            <div class="row">
+
+                                <div class="col-md-6 offset-md-6">
+                                    <button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Copy</button>
+                                    <button type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Preview</button>
+
+                                </div>
+                            </div> -->
+
+
+                            <!-- <div class="m-separator m-separator--dashed m-separator--lg"></div> -->
+
+                            <div class="m-card-profile__pic">
+                                <div class="m-card-profile__pic-wrapper">
+                                    <img (click)="surveyImgClick()" [src]='formData.public_survey_main_picture == null ? "./assets/eventalliance/media/img/no-image.jpg" : formData.public_survey_main_picture'  alt="" style="height: 80px; width: 80px;">
+                                    <input (change)="onSurveyImageChange($event)" type="file" class="d-none" #surveyImage>
+                                </div>
+                            </div>
+                            <div class="m-card-profile__details">
+                                <small>Click on the image to select a new one.</small>
+                            </div>                         
+
+
+                            <div class="form-group m-form__group">
+                                <label>Survey Title *</label>
+                                <input type="text" class="form-control m-input m-input--square" [(ngModel)] = "formData.public_survey_title" placeholder="Survey title here...">
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Welcome Message *</label>
+                                <textarea class="form-control m-input m-input--square" [(ngModel)] = "formData.welcome_message" placeholder="Welcome message here..."></textarea>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Legal Disclamer *</label>
+                                <textarea class="form-control m-input m-input--square" [(ngModel)] = "formData.legal_disclaimer" placeholder="Legal disclamer here..."></textarea>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Event Description *</label>
+                                <textarea class="form-control m-input m-input--square" [(ngModel)] = "formData.event_description" placeholder="Event description here..."></textarea>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Opt-In *</label>
+                                <select class="form-control m-input m-input--square" [(ngModel)]="formData.opt_in">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>                                    
+                                </select>                               
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Opt-In Message *</label>
+                                <textarea class="form-control m-input m-input--square" [(ngModel)] = "formData.opt_in_message" placeholder="Opt-In message here... "></textarea>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <label>Thank you Message *</label>
+                                <textarea class="form-control m-input m-input--square" [(ngModel)] = "formData.thanks_message" placeholder="Thank you message here..."></textarea>
+                            </div>
+                        </div>
+                        
+
+
+                        <!-- public survey questions-->
+                        <div class="m-card-profile" id="div_public_survey"  [style.display]="(activatedMenu==5 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    Public Survey
+                                </h3>
+                            </div>
+                            <p>
+                               <!--  <strong>
+                                    Questions>
+                                </strong> -->
+                            </p>
+                            
+                             <div class="form-group m-form__group">
+                                <div style="float: right;">
+                                    <button (click) = "addQuestion()" type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase">Add Questions</button>
+                                </div>
+                                <div style="height: 50px;">&nbsp;</div>
+                                <div *ngFor="let question of questions; let in=index" style="margin-bottom:20px; padding-bottom: 10px; border-bottom: 1px solid #e9ecef">
+                                    <div style="display: grid;grid-template-columns: auto 110px; padding-bottom: 10px;">
+                                        <div>
+                                            <input type="text" [(ngModel)]="questions[in].question" class="form-control m-input m-input--square" style="width:100%;" placeholder="Type your question here">
+                                        </div>
+                                        <div>
+                                            <button (click) = "addOption(in)" type="button" class="btn btn-outline-metal m-btn btn-sm m-btn--outline-2x m-btn--uppercase" style="height:38px">Add Options</button>
+                                        </div>                         
+                                    </div>    
+                                    <div *ngFor="let option of questions[in].options; let i=index" style="padding-bottom:10px;">
+                                        <input type="text" [(ngModel)]="option.option" class="form-control m-input m-input--square" placeholder="Option text"> 
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                        <!-- options -->
+                        <div class="m-card-profile" id="div_options"  [style.display]="(activatedMenu==6 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    Options
+                                </h3>
+                            </div>
+
+                            <div class="form-group m-form__group">
+                                Team Review Enable 
+                                <input type="checkbox" [(ngModel)]="formData.review_enable">
+                            </div>
+
+                        </div>
+                        <!-- *************************** -->
+
+                        <div class="m-card-profile" id="div_team_members"  [style.display]="(activatedMenu==7 ? 'block' : 'none')">
+                            <div class="m-form__heading">
+                                <h3 class="m-form__heading-title">
+                                    Members' Access
+                                </h3>
+                            </div>
+
+                            <div class="form-group m-form__group">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="80%">Name</th>                                       
+                                        <th width="20%">Access</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let member of teamUsers, let i = index;">
+                                        <td>
+                                            <strong>{{ member.user_name }}</strong>
+                                        </td>                                        
+                                        <td>
+                                           <input type="checkbox"  value="{{member.team_member_id}}|{{member.user_id}}" [checked]="isAccessGivenToMember(i)" (click)="toggleMemberAccess($event, i)">
+                                        </td>                                        
+                                    </tr>  
+                                </tbody>
+                            </table>
+                                
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-outline-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" data-dismiss="modal">Cancel</button>
+                <!-- <button type="button" class="btn btn-outline-metal m-btn m-btn--custom m-btn--outline-2x m-btn--uppercase float-left" data-dismiss="modal">Cancel</button> -->
+                <button type="button" [disabled]="!saveButtonActive"  class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click)="SaveEvent()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

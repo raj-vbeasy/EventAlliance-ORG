@@ -1,0 +1,323 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+	<div class="m-subheader-search" style="padding-bottom: 0;">
+		<div class="row">
+			<div class="col-md-1">
+				<img [src]="artistImage" style="border-radius: 50%; width: 100%;" alt="" />
+			</div>
+			<div class="col-md-11">
+				<h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+					{{artistName}} 
+				</h1>
+
+
+				<!-- <code *ngFor="let numberOfArtist of [{{data.name}}]">hello</code> -->
+				<span *ngFor="let generes of data.artist_genres" class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66;margin-right:2px;">{{ generes.genre.name }}</span>
+				
+				<br/><br/>
+				<!-- start menu -->
+
+				<ul class="nav nav-tabs  m-tabs-line  m-tabs-line--2x m-tabs-line--white" style="margin-bottom:-1px;" role="tablist">
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link active" data-toggle="tab" routerLink="/artist-details/{{artistId}}" role="tab">
+							<small>Insight</small>
+						</a>
+					</li>
+
+					<!-- <li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" routerLink="/about-artist/{{artistId}}" role="tab">
+							<small>About</small>
+						</a>
+					</li> -->
+
+					<li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link" data-toggle="tab" routerLink="/current-event/{{artistId}}" role="tab">
+							<small>Tour Dates</small>
+						</a>
+					</li>
+					<!-- <li class="nav-item m-tabs__item">
+						<a class="nav-link m-tabs__link " data-toggle="tab" routerLink="/past-event/{{artistId}}" role="tab">
+							<small>Past Venue</small>
+						</a>
+					</li> -->
+                   <!--  <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" routerLink="/edit-artist" role="tab">
+                               <small>Edit</small>
+                       </a>
+                   </li> -->
+
+
+               </ul>
+               <!-- end menu -->
+               <button class="btn m-btn--pill m-btn--air btn-custom-header-panel header-floating-action-button" type="button" (click) = "addArtistButton()" >
+               	<i class="la la-plus"></i>
+               </button>
+
+           </div>
+
+       </div>
+   </div>
+
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+	<div class="row" style="margin-left:0px; margin-right: 0px">
+
+		<div class="col-xl-3">
+
+			<div class="row" style="margin-left:0px; margin-right: 0px">
+				<div class="m-portlet m-portlet--full-height  artist-insight-counts" style="width: 100%">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<h3 class="m-portlet__head-text">
+									Engagement
+								</h3>
+							</div>
+						</div>
+					</div>
+					<div class="m-portlet__body">
+						<div class="count">{{totalViews}}</div>
+						<small>Total Views</small>
+						<canvas style="height: 160px; width: 300px;" baseChart
+						[data]="viewersData"
+						[options] = "chartOptions"
+						[colors] = "lineChartColors"
+						[labels]="chartLabels"
+						[chartType]="chartType"></canvas>
+					</div>
+				</div>
+				<div class="m--space-30"></div>
+			</div>
+			<div class="row" style="margin-left:0px; margin-right: 0px">
+				<div class="m-portlet m-portlet--full-height  artist-insight-counts" style="width: 100%">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<h3 class="m-portlet__head-text">
+									Fanbase
+								</h3>
+							</div>
+						</div>
+					</div>
+					<div class="m-portlet__body">
+						<div class="count">{{totalSubscribers}}</div>
+						<small>Subscribers</small>
+						<canvas  baseChart	style="height: 160px; width: 300px;" 					  
+						[data]="subscribersData"
+						[labels]="chartLabels"
+						[options] = "chartOptions"
+						[colors] = "lineChartColors"           
+						[chartType]="chartType"></canvas>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xl-6">
+			<!--begin:: Widgets/Blog-->
+			<div class="m-portlet m-portlet--full-height ">
+				<div class="m-portlet__head">
+					<div class="m-portlet__head-caption">
+						<div class="m-portlet__head-title">
+							<h3 class="m-portlet__head-text">
+								Top Tracks
+							</h3>
+						</div>
+					</div>
+				</div>
+				<div class="m-portlet__body">
+					<br/><br/><br/><br/>
+					<div class="m-widget19">
+						<div id="youtubeVideoContainer" class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
+							<iframe width="100%" *ngIf="videoUrl!=null" id="videoFrame" frameborder="0" height="331" style="padding:0 20px 0 20px;" [src]="videoUrl"></iframe>							
+						</div>
+						<div class="m-widget19__content">
+							<div class="m-widget19__header">
+								<div class="m-widget19__info">
+									<span class="m-widget19__username">
+										{{video.title}} 
+									</span><br>
+									<span class="m-widget19__time" style="line-height: normal;">
+										{{video.description}}
+									</span>
+								</div>
+								
+							</div>
+							<div class="m-widget19__body">
+								<table class="table">
+									<tbody>
+										<tr *ngFor="let artistVideo of artistVideos; let i = index" (click)="openVideoUrl(i)" style="cursor:pointer">
+											<td width='15%'>
+												<img src="{{ artistVideo.thumbnailsUrl }}" style=" height:70px; width:95px;" alt="" /> 
+											</td>
+											<td width='80%'> <strong>{{ artistVideo.videoTitle}}</strong>
+												<br/>
+												<small>{{ artistVideo.videoDescription }}</small>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="">
+							<!-- <button type="button" class="btn  btn-secondary m-btn m-btn--hover-brand  btn-block">View More</button> -->
+                            <!-- <button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">
+                                View More 
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3">
+        	<div class="m-portlet m-portlet--full-height  " style="height: 185px">
+        		<div class="m-portlet__head">
+        			<div class="m-portlet__head-caption">
+        				<div class="m-portlet__head-title">
+        					<h3 class="m-portlet__head-text">
+        						Cost
+        					</h3>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="m-portlet__body">
+        			<h2> {{data.budget.amount}} <!-- <a href="javascript:void(0)"  (click) = "editArtistBudget()" id="edit-artist-budget"> <i class="fa fa-edit" style="font-size: 1.6rem; font-weight: 500; color: #2a9c85; margin-left:10px;"></i></a> --> </h2>
+        		</div>
+        	</div>
+        	<div class="m--space-30"></div>
+        	<div class="m-portlet m-portlet--bordered-semi m-portlet--half-height m-portlet--fit " style="height: 350px">
+        		<div class="m-portlet__head">
+        			<div class="m-portlet__head-caption">
+        				<div class="m-portlet__head-title">
+        					<h3 class="m-portlet__head-text">
+        						Related Artists
+        					</h3>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="m-portlet__body">
+        			<table class="table">
+        				<tbody>
+        					<tr *ngFor = "let relatedArtist of relatedArtists">
+        						<td width='20%'>
+        							<img src="{{relatedArtist.profile_picture}}" style="border-radius: 50%; height:50px; width:50px;" alt="" />
+        						</td>
+        						<td width='80%'>
+        							
+        							<strong><a routerLink="/artist-details/{{relatedArtist.artist_id}}">{{relatedArtist.name}}</a></strong>
+        							<br/>
+        							<small>{{relatedArtist.total_subscriber}} Subscribers</small>
+        						</td>
+        					</tr>
+        				</tbody>
+        			</table>
+        		</div>
+        	</div>
+        	<div class="m--space-30"></div>
+        	<div class="m-portlet m-portlet--bordered-semi m-portlet--half-height m-portlet--fit " style="height: 305px">
+        		<div class="m-portlet__head">
+        			<div class="m-portlet__head-caption">
+        				<div class="m-portlet__head-title">
+        					<h3 class="m-portlet__head-text">
+        						Sources
+        					</h3>
+        				</div>
+        			</div>
+        		</div>
+        		<div class="m-portlet__body">
+        			<table class="table">
+        				<tbody>
+        					<!-- <tr *ngFor="let index of [0,1,2]"> -->
+        						<tr *ngFor="let channels of data.artist_channels">
+        							<td width='20%'>
+        								<img src="./assets/eventalliance/media/img/youtube/youtube-icon.png" style="border-radius: 50%; height:50px; width:50px;" alt="" />
+        							</td>
+        							<td width='80%'>
+
+        								<strong>{{channels.channel.channel_title}}</strong><br/>
+        								<small><!-- Youbute, Updated 2d ago. --></small>
+        							</td>
+        						</tr>
+        					</tbody>
+        				</table>
+        			</div>
+        		</div>
+
+        	</div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="eventList" role="dialog">
+    	<div class="modal-dialog modal-md" role="document">
+    		<div class="modal-content">
+    			<div class="modal-header">
+    				<h5 class="modal-title" id="exampleModalLabel"><!-- {{modalTitle}} --></h5>
+    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    					<span aria-hidden="true">×</span>
+    				</button>
+    			</div>
+    			<div class="modal-body">
+    				<div class="m-wizard__form-step" id="m_wizard_form_step_2">
+    					<div class="row">
+    						<div class="col-xl-10 offset-xl-1">							
+    							<div class="row">									
+    								<div class="col-md-12">
+    									<label>Select an event *</label>
+    									<select class="form-control m-input m-input--solid" style="width: 100%"  id="eventsList" [(ngModel)]="selectedEventId">
+    									</select>
+    								</div> 
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-outline-metal m-btn m-btn--custom m-btn--outline-2x" data-dismiss="modal">Cancel</button>
+    				<button type="button" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click) ="SaveEvent(this.selectedEventId)" >Add Artist</button>
+    			</div>
+    			
+    		</div>
+    	</div>
+    </div>
+
+
+
+
+    <div class="modal fade" id="budgetList" role="dialog">
+    	<div class="modal-dialog modal-md" role="document">
+    		<div class="modal-content">
+    			<div class="modal-header">
+    				<h5 class="modal-title" id="exampleModalLabel"><!-- {{modalTitle}} --></h5>
+    				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    					<span aria-hidden="true">×</span>
+    				</button>
+    			</div>
+    			<div class="modal-body">
+    				<div class="m-wizard__form-step" id="m_wizard_form_step_2">
+    					<div class="row">
+    						<div class="col-xl-10 offset-xl-1">							
+    							<div class="row">									
+    								<div class="col-md-12">
+    									<label>Select a budget *</label>
+    									<select id="cmbBudget" style="width:100%" class="form-control m-hrader-search-form__select" [(ngModel)]="selectedBudgetId">
+                                            <option *ngFor="let budget of allBudgets" [value]="budget.id">{{budget.amount}}</option>                 
+                                        </select>
+    								</div> 
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-outline-metal m-btn m-btn--custom m-btn--outline-2x" data-dismiss="modal">Cancel</button>
+    				<button type="button" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click) ="EditBudget()" >Update Budget</button>
+    			</div>
+    			
+    		</div>
+    	</div>
+    </div>

@@ -1,0 +1,146 @@
+<!-- BEGIN: Subheader -->
+<div class="" appunwraptag="">
+    <div class="m-subheader-search" style="padding-bottom: 0;">
+        <div class="row">
+            <div class="col-md-1">
+                <!-- <img src="./assets/eventalliance/media/img/users/user4.jpg" style="border-radius: 50%;" alt="" /> -->
+                <img [src]="artistImage" style="border-radius: 50%; width:100%;" alt="" />
+            </div>
+            <div class="col-md-11">
+                <h1 style="font-size: 2.8rem;font-weight: 400;color: #fff;margin: 0;">
+                 {{artistName}} 
+             </h1>
+
+             <span *ngFor="let generes of data.artist_genres" class="m-badge m-badge--primary m-badge--wide" style="background-color: #204d66;margin-right:2px;">{{ generes.genre.name }}</span>
+
+             <br/><br/>
+             <!-- start menu -->
+
+             <ul class="nav nav-tabs  m-tabs-line  m-tabs-line--2x m-tabs-line--white" style="margin-bottom:-1px;" role="tablist">
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link " data-toggle="tab" routerLink="/artist-details/{{artistId}}" role="tab">
+                        <small>Insight</small>
+                    </a>
+                </li>
+
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link active" data-toggle="tab" routerLink="/about-artist/{{artistId}}" role="tab">
+                        <small>About</small>
+                    </a>
+                </li>
+
+                <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link " data-toggle="tab" routerLink="/current-event/{{artistId}}" role="tab">
+                        <small>Tour Dates</small>
+                    </a>
+                </li>
+
+                <!-- <li class="nav-item m-tabs__item">
+                    <a class="nav-link m-tabs__link " data-toggle="tab" routerLink="/past-event/{{artistId}}" role="tab">
+                        <small>Past Venue</small>
+                    </a>
+                </li> -->
+                    <!-- <li class="nav-item m-tabs__item">
+                        <a class="nav-link m-tabs__link" data-toggle="tab" routerLink="/edit-artist" role="tab">
+                             <small>Edit</small> 
+                       </a>
+                   </li> -->
+
+               </ul>
+               <!-- end menu -->
+               <button class="btn m-btn--pill m-btn--air btn-custom-header-panel header-floating-action-button" type="button" (click) = "addArtistButton()" >
+                <i class="la la-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+
+    <div class="col-xl-12">
+        <!--begin:: Widgets/Finance Summary-->
+        <div class="m-portlet m-portlet--full-height ">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Description
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-demo__preview">
+                    <blockquote class="blockquote">
+                        <p class="mb-0"><!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. --></p>
+                        <footer class="blockquote-footer">
+                            {{channelDescription}} 
+                        </footer>
+                    </blockquote>                       
+                </div>
+            </div>
+        </div>
+        <!--end:: Widgets/Finance Summary-->
+    </div>
+    <!-- <div class="col-xl-4">            
+        <div class="m-portlet m-portlet--full-height ">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Link
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                <div class="m-demo__preview">
+                    <p><a href="javascript:void(0)" class="m-link m--font-bolder">VEVO</a></p>
+                    <p><a href="javascript:void(0)" class="m-link m--font-bolder">Facebook</a></p>
+                    <p><a href="javascript:void(0)" class="m-link m--font-bolder">Google</a></p>
+                    <p><a href="javascript:void(0)" class="m-link m--font-bolder">Linkedin</a></p>
+                    <p><a href="javascript:void(0)" class="m-link m--font-bolder">Yahoo!</a></p>
+                    <p><a href="javascript:void(0)" class="m-link m--font-bolder">Twitter</a></p>
+                </div>
+            </div>
+        </div>            
+    </div> -->
+</div>
+
+<div class="modal fade" id="eventList" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><!-- {{modalTitle}} --></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-wizard__form-step" id="m_wizard_form_step_2">
+                    <div class="row">
+                        <div class="col-xl-10 offset-xl-1">                         
+                            <div class="row">                                   
+                               <div class="col-md-12">
+                                <label>Select an event *</label>
+                                <select class="form-control m-input m-input--solid" style="width: 100%"  id="eventsList" [(ngModel)]="selectedEventId">
+                                </select>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-metal m-btn m-btn--custom m-btn--outline-2x" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-accent m-btn m-btn--custom m-btn--bolder m-btn--uppercase" (click) ="SaveEvent(this.selectedEventId)" >Add Artist</button>
+        </div>
+
+    </div>
+</div>
+</div>
+
