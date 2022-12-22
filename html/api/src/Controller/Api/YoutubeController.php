@@ -12,7 +12,7 @@ class YoutubeController extends ApiController {
 
 	public function initialize(){
 		parent::initialize();
-		$this->_apiKey = "AIzaSyCDu3u8JpdHA88auUfZwk8PHmBQ0T59rGo";
+		$this->_apiKey = "AIzaSyAiBTla0lc7ykFx-4GBewI993gTwHMDbT0";
 	}
 
     public function live() {
