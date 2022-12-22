@@ -268,7 +268,11 @@ Router::prefix('api', function ($routes) {
             '/:artistId/getRelatedArtists' => [
                 'action' => 'getRelatedArtists',
                 'method' => 'GET' 
-            ]
+            ],
+            '/updatedata' => [
+                'action' => 'updateData',
+                'method' => 'GET'
+            ],
             
         ]
     ]);

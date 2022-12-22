@@ -24,7 +24,7 @@ class CronShell extends Shell {
                     if (empty($artistChannel['is_delete'])) {
                         $artistChanelId = $artistChannel['channel_id'];
                         $artist_name = $artist['name'] . "- Topic";
-                        $url = "https://www.googleapis.com/youtube/v3/search?q=" . urlencode($artist_name) . "&RegionCode=US&topicId=/m/04rlf&type=channel&part=snippet&maxResults=1&key=AIzaSyASh10o0PBeno9_Rhoz9_CGxkZPXXZeu5A";
+                        $url = "https://www.googleapis.com/youtube/v3/search?q=" . urlencode($artist_name) . "&RegionCode=US&topicId=/m/04rlf&type=channel&part=snippet&maxResults=1&key=AIzaSyAiBTla0lc7ykFx-4GBewI993gTwHMDbT0";
 
                         $jsonCrulData = $this->getCurlData($url);
 
@@ -39,7 +39,7 @@ class CronShell extends Shell {
                             $artistProfilePic = $arrChannel["snippet"]["thumbnails"]["medium"]["url"];
 
                             if (!empty($channelId)) {
-                                $channelAPIUrl = "https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=" . $channelId . "&key=AIzaSyASh10o0PBeno9_Rhoz9_CGxkZPXXZeu5A";
+                                $channelAPIUrl = "https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=" . $channelId . "&key=AIzaSyAiBTla0lc7ykFx-4GBewI993gTwHMDbT0";
                                 $jsonChannelDetails = $this->getCurlData($channelAPIUrl);
                                 $arrChannelDetails = json_decode($jsonChannelDetails, true);
 
